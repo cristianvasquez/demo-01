@@ -1,0 +1,39 @@
+@prefix this: <http://my-data-pod#>.
+@prefix hydra: <http://www.w3.org/ns/hydra/core#>.
+@prefix oslo: <http://oslo.example.org#>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix http: <http://www.w3.org/2011/http#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix ex: <{{base}}/example-vocab#>.
+@prefix step: <{{base}}/oslo/example-steps#>.
+@prefix state: <{{base}}/oslo/example-states#>.
+@prefix shape: <{{base}}/oslo/example-shapes#>.
+
+<{{current}}> a ex:DirectedAcyclicPath .
+
+## This is part of the workflow blueprint, a the replicable recipe that is pre-computed
+## through optimization or user preferences. They might represent UI modalities. 
+<{{current}}> ex:start              step:login-through-itme, 
+                                    step:login-through-card, 
+                                    step:provide-user-identifier-manually .
+
+<{{current}}> ex:end                step:fill-and-send-permit-request .
+
+
+step:provide-user-identifier-manually 
+    ex:to step:validate-user-identifier-through-magda .
+
+step:validate-user-identifier-through-magda 
+    ex:to step:fill-and-send-permit-request .
+
+step:login-through-itme 
+    ex:to step:provide-user-identifier-through-citizen-profile .
+
+step:login-through-card 
+    ex:to step:provide-user-identifier-through-citizen-profile . 
+
+step:provide-user-identifier-through-citizen-profile 
+    ex:to step:fill-and-send-permit-request .

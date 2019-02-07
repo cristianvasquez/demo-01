@@ -1,0 +1,36 @@
+{
+    "@context": {
+        "hydra": "http://www.w3.org/ns/hydra/context.jsonld",
+        "oslo": "http://oslo.example.org#",
+        "agent": "http://fast.example.org/agent#"
+    },
+    "@type": "agent:Path",
+    "@id": "http://my-personal-pod/goal/change-address/shortest-path",
+    "agent:duration": "10 days",
+    "agent:cost": "5 euros",
+    "agent:Goal": {
+        "@type": "agent:Goal",
+        "@id": "http://my-personal-pod/goal/change-address",
+        "oslo:name": "Change adress"
+    },
+    "agent:steps": [
+        {
+            "@type": "oslo:Step",
+            "@id": "http://oslo.example.org/step/provide-citizen-identity"
+        },
+        {
+            "@type": "oslo:Step",
+            "@id": "http://oslo.example.org/step/step-3"
+        }
+    ],
+    "agent:relations": [
+            {
+            "source": {
+                "@id": "http://oslo.example.org/step/provide-citizen-identity"
+            },
+            "target": {
+                "@id": "http://oslo.example.org/step/step-3"
+            }
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+@prefix schema: <http://schema.org/> .
+@prefix ex: <http://example.org/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/user>
+  a <http://snomed.info/id/116154003>, <http://snomed.info/id/125676002>, schema:Person ;
+  schema:gender <http://example.org/administrativeGender> ;
+  schema:event <http://example.org/birthEvent>, <http://example.org/deathEvent> ;
+  ex:hasName ex:humanName ;
+  dc:identifier ex:personalIdentifier ;
+  schema:homeLocation ex:address ;
+  ex:hasMaritalStatus ex:maritalStatus ;
+  ex:hasReligion ex:religion .
+
+ex:birthEvent
+  a <http://snomed.info/id/169811007> ;
+  schema:birthDate ex:birthDate ;
+  schema:birthPlace ex:birthPlace .
+
+ex:deathEvent
+  a <http://snomed.info/id/419620001> ;
+  schema:deathDate ex:deathDate .
+
+ex:humanName
+  schema:familyName ex:humanNameFamilyName ;
+  schema:additionalName ex:humanNameMiddleName ;
+  schema:givenName ex:humanNameGivenName ;
+  foaf:title ex:humanNameSalutation ;
+  schema:honorificPrefix ex:humanNameHonorificPrefix .
+
+ex:birthPlace
+  a <http://snomed.info/id/169812000> ;
+  schema:name ex:birthPlaceName .
+
+ex:address
+  a schema:PostalAddress ;
+  schema:validFrom ex:addressValidSince ;
+  schema:validThrough ex:addressValidUntil ;
+  schema:contactType ex:addressType ;
+  schema:streetAddress ex:streetAddress ;
+  schema:postalCode ex:addressPostalCode ;
+  schema:addressLocality ex:addressCity ;
+  schema:addressCountry ex:addressCountry .
+
+ex:addressCountry
+  a schema:Country ;
+  schema:name ex:addressCountryName .
+
+ex:maritalStatus
+  a <http://snomed.info/id/365581002> ;
+  rdfs:label ex:maritalStatusLabel .
+
+ex:religion
+  a <http://snomed.info/id/1400009> ;
+  rdfs:label ex:religionLabel .

@@ -1,0 +1,15 @@
+@prefix this: <http://my-data-pod#>.
+@prefix hydra: <http://www.w3.org/ns/hydra/core#>.
+@prefix oslo: <http://oslo.example.org#>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+
+<{{current}}> a ex:Path ;
+                ex:duration "10 days" ;
+                ex:cost "5 euros" ;
+                ex:steps ( <http://oslo.example.org/step/provide-citizen-identity> <http://oslo.example.org/step/step-3> ) ;
+                ex:relations (
+                    { }
+                    { }
+                )
+

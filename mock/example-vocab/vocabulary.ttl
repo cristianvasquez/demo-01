@@ -1,0 +1,24 @@
+@prefix this: <http://my-data-pod#>.
+@prefix hydra: <http://www.w3.org/ns/hydra/core#>.
+@prefix oslo: <http://oslo.example.org#>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix http: <http://www.w3.org/2011/http#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix ex: <{{current}}#>.
+
+ex:State rdfs:label "A step" .
+ex:Shape rdfs:label "A shape" .
+
+ex:requires rdfs:label "Requires a state" .
+
+ex:produces rdfs:label "Produces some triples" .
+ex:removes rdfs:label "Removes some triples" .
+
+ex:validatedWith rdfs:label "Validated with some shape" .
+
+ex:DirectedAcyclicPath rdfs:label "A graph that does not contain any cycles (loops)" .
+
+ex:has-end-node rdfs:label "Has end node" .

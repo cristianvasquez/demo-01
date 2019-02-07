@@ -1,0 +1,32 @@
+{
+    "@id": "http://localhost:3000/agent/intention/request-flea-market-permit/paths",
+    "@type": "ex:DAG",
+    "ex:nodes": [
+        {
+            "@id": "http://example.org/A"
+            
+        },
+        {
+            "@id": "http://example.org/B"
+        },
+        {
+            "@id": "http://example.org/C"
+        }
+    ],
+    "ex:edges": [{
+            "@id": "http://example.org/AB",
+            "ex:from": "http://example.org/A",
+            "ex:to": "http://example.org/B"
+        },
+        {
+            "@id": "http://example.org/BC",
+            "ex:from": "http://example.org/B",
+            "ex:to": "http://example.org/C"
+        },
+        {
+            "@id": "http://example.org/AC",
+            "ex:from": "http://example.org/A",
+            "ex:to": "http://example.org/C"
+        }
+    ]
+}

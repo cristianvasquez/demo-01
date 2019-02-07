@@ -1,0 +1,278 @@
+openapi: 3.0.0
+info:
+  title: FAST agent API prototype
+  version: v0.2
+  description: API to support citizens in decision making based on OSLO Steps and personal information.
+servers: []
+components:
+  schemas:
+    URI:
+      type: string
+      format: uri-template
+      example: 'http://my-personal-pod/profile'
+    Type:
+      type: string
+      format: uri-template
+      example: 'http://oslo.example.org/goal'
+    Context:
+      title: context
+      example:
+        hydra: 'http://www.w3.org/ns/hydra/context.jsonld'
+        oslo: 'http://oslo.example.org#'
+      description: A JSON-LD valid context element. Corresponds to the set of vocabularies used to describe the data.
+      type: object
+    Resource:
+      title: resource
+      description: 'The representation of a resource, might or not contain hypermedia controls'
+      type: object
+      properties:
+        '@context':
+          $ref: '#/components/schemas/Context'
+        '@type':
+          $ref: '#/components/schemas/Type'
+        '@id':
+          $ref: '#/components/schemas/URI'
+        operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+      required:
+        - context
+        - type
+        - id
+    ResourceLink:
+      title: link
+      description: represents a link to the resource. The type property is not mandatory
+      properties:
+        '@id':
+          $ref: '#/components/schemas/URI'
+      required:
+        - '@id'
+      type: object
+      example:
+        '@context': 'http://oslo.example.org/'
+        '@id': 'http://oslo.example.org/goal/change-address'
+    Collection:
+      title: collection
+      description: 'A collection of resources, they might or not be of the same type'
+      example:
+        '@context': 'http://www.w3.org/ns/hydra/context.jsonld'
+        '@id': 'http://api.example.com/an-issue/comments'
+        '@type': Collection
+        totalItems: '100'
+        member:
+          - '@id': /comments/429
+          - '@id': /comments/781
+            title: Properties may be embedded directly in the collection
+      properties:
+        member:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceLink'
+      required:
+        - member
+      $ref: '#/components/schemas/Resource'
+    Operation:
+      properties:
+        method:
+          enum:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - PATCH
+            - HEAD
+            - OPTIONS
+          type: string
+        expects:
+          $ref: '#/components/schemas/Type'
+        returns:
+          $ref: '#/components/schemas/Type'
+      required:
+        - method
+      type: object
+    Profile:
+      title: userProfile
+      description: The profile of a FAST end user
+      example:
+        '@context': 'http://oslo.example.org/'
+        '@id': 'http://my-personal-pod/profile'
+        '@type': Profile
+        age: 64
+        status: active
+      $ref: '#/components/schemas/Profile'
+    Step:
+      title: step
+      description: 'A step, with pre-conditions and a state transition'
+      example:
+        '@context': 'http://oslo.example.org/'
+        '@id': 'http://oslo.example.org/steps/provide-citizen-identity'
+        '@type': Resource
+      $ref: '#/components/schemas/Resource'
+    Goal:
+      title: goal
+      description: a desired end state
+      example:
+        '@context': 'http://oslo.example.org/'
+        '@id': 'http://oslo.example.org/goal/change-address'
+        '@type': Goal
+      $ref: '#/components/schemas/Resource'
+    Goals:
+      title: goals
+      description: A collection of goals
+      $ref: '#/components/schemas/Collection'
+    Path:
+      title: path
+      description: A sequence of steps together with some values
+      example:
+        '@context':
+          hydra: 'http://www.w3.org/ns/hydra/context.jsonld'
+          oslo: 'http://oslo.example.org#'
+        '@id': 'http://my-personal-pod/goal/change-address/shortestPath'
+        '@type': 'hydra:Collection'
+        'hydra:totalItems': '4980'
+        'hydra:member':
+          - '@id': 'http://oslo.example.org/steps/provide-citizen-identity'
+          - '@id': 'http://oslo.example.org/steps/the-next-step'
+        'oslo:duration': 10 days
+        'oslo:cost': 5 euros
+        'oslo:goal':
+          '@type': 'oslo:Goal'
+          '@id': 'http://oslo.example.org/goal/change-address'
+          'oslo:name': Change adress
+      properties:
+        '@context':
+          $ref: '#/components/schemas/Context'
+        '@type':
+          $ref: '#/components/schemas/Type'
+        '@id':
+          $ref: '#/components/schemas/URI'        
+        member:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceLink'
+        duration:
+          type: string
+        cost:
+          type: string
+      type: object
+    Relation:
+      properties:
+        source:
+          $ref: '#/components/schemas/ResourceLink'
+        target:
+          $ref: '#/components/schemas/ResourceLink'
+      type: object
+    DirectedAcyclicPath:
+      properties:
+        '@context':
+          $ref: '#/components/schemas/Context'
+        '@type':
+          $ref: '#/components/schemas/Type'
+        '@id':
+          $ref: '#/components/schemas/URI'        
+        member:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceLink'
+        relations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relation'
+      type: object
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes: {}
+  links: {}
+  callbacks: {}
+paths:
+  /agent/profile:
+    get:
+      responses:
+        '200':
+          description: The user profile
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+      description: Gets the profile data
+      operationId: getProfile
+    put:
+      responses:
+        '200':
+          description: To update the user profile
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+      description: updates the profile data
+      operationId: updateProfile
+  /agent/goal:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Goals'
+      description: lists all the goals in the user space
+      operationId: GET_agent-goal
+    put:
+      responses:
+        '200':
+          description: To add a new goal in the user space
+      description: adds a new goal in the user space
+      operationId: addGoal
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ResourceLink'
+            example:
+              '@context': 'http://oslo.example.org/'
+              '@id': 'http://oslo.example.org/goal/change-address'
+              '@type': Goal
+        required: true
+    delete:
+      responses:
+        '200':
+          description: The Goal was removed successfully
+      description: deletes a goal from the user space
+      operationId: deleteGoal
+  '/agent/goal/{goalId}/shortestPath':
+    get:
+      responses:
+        '200':
+          description: 'A sequence of steps towards a goal'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Path'
+      description: 'Gets the shortest path towards a Goal, using custom values'
+      operationId: shortestPath
+    parameters:
+      - name: goalId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/agent/goal/{goalId}/paths':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/DirectedAcyclicPath'
+      operationId: path
+    parameters:
+      - name: goalId
+        in: path
+        required: true
+        schema:
+          type: string

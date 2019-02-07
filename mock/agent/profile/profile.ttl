@@ -1,0 +1,19 @@
+@prefix hydra: <http://www.w3.org/ns/hydra/core#>.
+@prefix oslo: <http://oslo.example.org#>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix http: <http://www.w3.org/2011/http#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# This is the data from the citizen's profile
+<{{current}}>
+  a foaf:Person ;
+  foaf:name "Alice Smith" ;
+  foaf:title "Alice" ;
+  foaf:givenname "Alice" ;
+  foaf:family_name "Smith" ;
+  foaf:nick "Alicije" ;
+  foaf:mbox_sha1sum "6169bc53fa041395fda1b6f8d03242c43feb42ce" ;
+  foaf:homepage <https://example.com/alice> .

@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "hydra": "http://www.w3.org/ns/hydra/context.jsonld",
+    "oslo": "http://oslo.example.org#",
+    "agent": "http://fast.example.org/agent#"
+  },
+  "@id": "http://my-personal-pod/goal",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "http://my-personal-pod/goal/change-address"
+    },
+    {
+      "@id": "http://my-personal-pod/goal/request-flea-market-permit"
+    }
+  ],
+  "hydra:supportedOperation": [
+    {
+      "@type": "hydra:Operation",
+      "hydra:method": "GET",
+      "hydra:returns": "hydra:Collection"
+    },
+    {
+      "@type": "hydra:Operation",
+      "hydra:method": "PUT",
+      "hydra:expects": "http://oslo.example.org#goal",
+      "hydra:returns": "agent:Goal"
+    }
+  ]
+}

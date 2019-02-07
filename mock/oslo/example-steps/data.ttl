@@ -1,0 +1,47 @@
+@prefix this: <http://my-data-pod#>.
+@prefix hydra: <http://www.w3.org/ns/hydra/core#>.
+@prefix ldp: <http://www.w3.org/ns/ldp#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix http: <http://www.w3.org/2011/http#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix ex: <{{base}}/example-vocab#>.
+@prefix step: <{{base}}/oslo/example-steps#>.
+@prefix state: <{{base}}/oslo/example-states#>.
+@prefix shape: <{{base}}/oslo/example-shapes#>.
+
+## The Steps, they represent change, in other words a state transition executed by a manual or automated agent
+
+## Manual steps
+step:login-through-itme a ex:Step ;
+        rdfs:label "Login via it's me" ;
+        ex:produces state:logged-in .
+
+step:login-through-card a ex:Step ;
+        rdfs:label "Login via identity card" ;
+        ex:produces state:logged-in .
+
+step:provide-user-identifier-manually a ex:Step ; 
+        rdfs:label "Provide user identifier manually" ;
+        ex:produces state:identifier-to-validate .
+
+## Automated steps
+step:validate-user-identifier-through-magda a ex:Step ; 
+        rdfs:label "Validate user identifier through Magda" ;
+        ex:requires state:identifier-to-validate ;
+        ex:produces state:has-national-number .
+        
+step:provide-user-identifier-through-citizen-profile a ex:Step ;
+        rdfs:label "Provide user identifier via citizen-profile" ;
+        ex:requires state:logged-in ;
+        ex:produces state:has-national-number .
+
+step:fill-and-send-permit-request a ex:Step ;
+        rdfs:label "Fill in the permit request" ;
+        ex:requires state:has-national-number ;
+        ex:validatedWith state:valid-permit-shape ; # This can be expressed as a requires + blank-nodes, but this would complicate things
+        ex:produces state:permit-requested ;
+        ex:removes state:has-intention-request-permit .
+    
+

@@ -1,0 +1,10 @@
+{
+    "@context": {
+        "hydra": "http://www.w3.org/ns/hydra/context.jsonld",
+        "oslo": "http://oslo.example.org#",
+        "agent": "http://fast.example.org/agent#"
+    },
+    "@id": "http://my-personal-pod",
+    "@type": "agent:Root",
+    "agent:API_TODO": "TODO: Define if go for the complex Hydra way or simple links"
+}

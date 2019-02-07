@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "hydra": "http://www.w3.org/ns/hydra/context.jsonld",
+    "oslo": "http://oslo.example.org#",
+    "agent": "http://fast.example.org/agent#"
+  },
+  "@id": "http://my-personal-pod/profile",
+  "@type": "Profile",
+  "age": 64,
+  "status": "active"
+}
