@@ -1,6 +1,6 @@
 # Json-ld from folder
 
-Exposes the RDF files in a folder and expose them as JSON-LD. 
+Reads all the RDF files of a folder and exposes the triples as JSON-LD. 
 
 Useful for quick-mocks
 
