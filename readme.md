@@ -1,4 +1,4 @@
-# Quick json-ld from folder
+# Json-ld from folder
 
 Exposes the RDF files in a folder and expose them as JSON-LD. 
 
