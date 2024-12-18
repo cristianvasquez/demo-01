@@ -1,6 +1,10 @@
-# Agent API
+# Quick json-ld from folder
 
-Holds a mock of the controls an agent provides.
+Exposes the RDF files in a folder and expose them as JSON-LD. 
+
+Useful for quick-mocks
+
+The repo contains a mock of the hypermedia controls a personal agent provides. 
 
 Will try to extract all triples in the folder and expose them as JSON-LD
 
